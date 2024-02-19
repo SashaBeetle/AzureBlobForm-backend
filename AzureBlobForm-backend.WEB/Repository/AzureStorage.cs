@@ -1,6 +1,8 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Sas;
 using AzureBlobForm_backend.Core.Interfaces;
 using AzureBlobForm_backend.Models.Database;
 
@@ -33,10 +35,13 @@ namespace AzureBlobForm_backend.Models.Repository
                     await client.UploadAsync(data);
                 }
 
+                Uri sasUrl = await CreateServiceSASBlob(client);
+
                 response.Status = $"File {blob.Name} Uploadet Succesfully.";
                 response.Error = false;
-                response.Blob.Uri = client.Uri.AbsoluteUri;
+                response.Blob.Uri = sasUrl.AbsoluteUri;
                 response.Blob.Name = client.Name;
+                
             }
             catch (RequestFailedException ex)
                 when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
@@ -52,6 +57,40 @@ namespace AzureBlobForm_backend.Models.Repository
                 return response;
             }
             return response;
+        }
+
+        public static async Task<Uri> CreateServiceSASBlob(BlobClient blobClient, string storedPolicyName = null)
+        {
+            // Check if BlobContainerClient object has been authorized with Shared Key
+            if (blobClient.CanGenerateSasUri)
+            {
+                // Create a SAS token that's valid for one day
+                BlobSasBuilder sasBuilder = new BlobSasBuilder()
+                {
+                    BlobContainerName = blobClient.GetParentBlobContainerClient().Name,
+                    BlobName = blobClient.Name,
+                    Resource = "b",
+                    StartsOn = DateTimeOffset.UtcNow
+                };
+
+                if (storedPolicyName == null)
+                {
+                    sasBuilder.ExpiresOn = DateTimeOffset.UtcNow.AddHours(1);
+                    sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
+                }
+                else
+                {
+                    sasBuilder.Identifier = storedPolicyName;
+                }
+
+                Uri sasURI = blobClient.GenerateSasUri(sasBuilder);
+
+                return sasURI;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
