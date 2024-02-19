@@ -5,6 +5,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using AzureBlobForm_backend.Core.Interfaces;
 using AzureBlobForm_backend.Models.Database;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AzureBlobForm_backend.Models.Repository
 {
@@ -25,6 +26,15 @@ namespace AzureBlobForm_backend.Models.Repository
             BlobResponse response = new();
 
             BlobContainerClient container = new BlobContainerClient(_storageConnectionString, _storageContainerName);
+           
+            string Validation = await ValidateFile(blob);
+
+            if(Validation != null)
+            {
+                response.Status = Validation;
+                response.Error = true;
+                return response;
+            }
 
             try
             {
@@ -56,15 +66,14 @@ namespace AzureBlobForm_backend.Models.Repository
                 response.Error = true;
                 return response;
             }
+            
             return response;
         }
 
         public static async Task<Uri> CreateServiceSASBlob(BlobClient blobClient, string storedPolicyName = null)
         {
-            // Check if BlobContainerClient object has been authorized with Shared Key
             if (blobClient.CanGenerateSasUri)
-            {
-                // Create a SAS token that's valid for one day
+            {              
                 BlobSasBuilder sasBuilder = new BlobSasBuilder()
                 {
                     BlobContainerName = blobClient.GetParentBlobContainerClient().Name,
@@ -91,6 +100,28 @@ namespace AzureBlobForm_backend.Models.Repository
             {
                 return null;
             }
+        }
+        public async Task<string> ValidateFile(IFormFile blob)
+        {
+            if (blob == null)
+            {
+                return "No file uploaded.";
+            }
+
+            var allowedExtensions = new[] { ".docx" };
+            var extension = Path.GetExtension(blob.FileName).ToLower();
+
+            if (!allowedExtensions.Contains(extension))
+            {
+                return "Invalid file format. Only .docx files are allowed.";
+            }
+
+            if (!blob.ContentType.Contains("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+            {
+                return "Invalid file content type. Expected application/vnd.openxmlformats-officedocument.wordprocessingml.document.";
+            }
+
+            return null;
         }
     }
 }
