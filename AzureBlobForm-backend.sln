@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureBlobForm-backend.WEB", "AzureBlobForm-backend.WEB\AzureBlobForm-backend.WEB.csproj", "{C66C67C6-70B5-4B06-9258-594624504154}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureBlobForm-backend.WEB", "AzureBlobForm-backend.WEB\AzureBlobForm-backend.WEB.csproj", "{C66C67C6-70B5-4B06-9258-594624504154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureBlobForm-backend.Core", "AzureBlobForm-backend.Core\AzureBlobForm-backend.Core.csproj", "{EA90A8DA-02E4-40E3-BBDC-C4268F056C8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureBlobForm-backend.Core", "AzureBlobForm-backend.Core\AzureBlobForm-backend.Core.csproj", "{EA90A8DA-02E4-40E3-BBDC-C4268F056C8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureBlobForm-backend.Models", "AzureBlobForm-backend.Models\AzureBlobForm-backend.Models.csproj", "{CE0B9FD9-5F57-4C8D-8C2E-A70B6EA22E6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureBlobForm-backend.Models", "AzureBlobForm-backend.Models\AzureBlobForm-backend.Models.csproj", "{CE0B9FD9-5F57-4C8D-8C2E-A70B6EA22E6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

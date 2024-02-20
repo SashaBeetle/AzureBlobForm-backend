@@ -15,7 +15,7 @@ namespace AzureBlobForm_backend.WEB.Controllers
             _storage = storage;
         }
         [HttpPost(nameof(Upload))]
-        public async Task<IActionResult> Upload(IFormFile blob)
+        public async Task<IActionResult> Upload(IFormFile blob, string email)
         {
             BlobResponse? response = await _storage.UploadAsync(blob);
 
