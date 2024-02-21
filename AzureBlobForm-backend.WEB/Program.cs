@@ -11,7 +11,7 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.WithOrigins("http://localhost:3000",
-                                              "http://localhost:3000");
+                                              "https://localhost:7123");
                       });
 });
 // Add services to the container.
@@ -20,6 +20,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddTransient<IAzureStorage, AzureStorage>();
 
@@ -31,9 +32,9 @@ if (app.Environment.IsDevelopment())
     
 }
 
-app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
+ 
 
 app.UseAuthorization();
 

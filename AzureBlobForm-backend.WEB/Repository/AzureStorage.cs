@@ -6,6 +6,7 @@ using Azure.Storage.Sas;
 using AzureBlobForm_backend.Core.Interfaces;
 using AzureBlobForm_backend.Models.Database;
 using Microsoft.AspNetCore.Mvc;
+using static System.Net.WebRequestMethods;
 
 namespace AzureBlobForm_backend.Models.Repository
 {
@@ -13,15 +14,17 @@ namespace AzureBlobForm_backend.Models.Repository
     {
         private readonly string _storageConnectionString;
         private readonly string _storageContainerName;
+       
 
         public AzureStorage(IConfiguration configuration)
         {
             _storageConnectionString = configuration.GetValue<string>("BlobConnectionString");
             _storageContainerName = configuration.GetValue<string>("BlobContainerName");
+            
         }
 
 
-        public async Task<BlobResponse> UploadAsync(IFormFile blob)
+        public async Task<BlobResponse> UploadAsync(IFormFile blob, string email)
         {
             BlobResponse response = new();
 
@@ -38,7 +41,10 @@ namespace AzureBlobForm_backend.Models.Repository
 
             try
             {
-                BlobClient client = container.GetBlobClient(blob.FileName);
+                
+               
+
+                BlobClient client = container.GetBlobClient(email + "|" + blob.FileName + ".docx");
 
                 await using (Stream? data = blob.OpenReadStream())
                 {
@@ -51,7 +57,9 @@ namespace AzureBlobForm_backend.Models.Repository
                 response.Error = false;
                 response.Blob.Uri = sasUrl.AbsoluteUri;
                 response.Blob.Name = client.Name;
+
                 
+
             }
             catch (RequestFailedException ex)
                 when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)

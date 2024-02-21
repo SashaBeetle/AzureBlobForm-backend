@@ -10,6 +10,6 @@ namespace AzureBlobForm_backend.Core.Interfaces
 {
     public  interface IAzureStorage
     {
-       Task<BlobResponse>  UploadAsync(IFormFile file);
+       Task<BlobResponse>  UploadAsync(IFormFile file, string email);
     }
 }
