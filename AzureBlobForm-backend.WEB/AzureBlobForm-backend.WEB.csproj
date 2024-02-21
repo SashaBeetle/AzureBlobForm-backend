@@ -19,8 +19,4 @@
     <ProjectReference Include="..\AzureBlobForm-backend.Models\AzureBlobForm-backend.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
