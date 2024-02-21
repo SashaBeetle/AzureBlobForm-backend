@@ -11,7 +11,7 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.WithOrigins("http://localhost:3000",
-                                              "https://localhost:7123");
+                                              "https://localhost:7123", "https://blobreactform.azurewebsites.net");
                       });
 });
 // Add services to the container.
