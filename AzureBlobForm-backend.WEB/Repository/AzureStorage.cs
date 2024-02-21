@@ -5,7 +5,9 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using AzureBlobForm_backend.Core.Interfaces;
 using AzureBlobForm_backend.Models.Database;
+using AzureBlobForm_backend.WEB.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 using static System.Net.WebRequestMethods;
 
 namespace AzureBlobForm_backend.Models.Repository
@@ -14,6 +16,7 @@ namespace AzureBlobForm_backend.Models.Repository
     {
         private readonly string _storageConnectionString;
         private readonly string _storageContainerName;
+        private ValidateService _validateService = new ValidateService();
        
 
         public AzureStorage(IConfiguration configuration)
@@ -30,11 +33,12 @@ namespace AzureBlobForm_backend.Models.Repository
 
             BlobContainerClient container = new BlobContainerClient(_storageConnectionString, _storageContainerName);
            
-            string Validation = await ValidateFile(blob);
+            string ValidationF = await _validateService.ValidateFile(blob);
+            string ValidationE = await _validateService.ValidateEmail(email);
 
-            if(Validation != null)
+            if(ValidationF != null || ValidationE != null)
             {
-                response.Status = Validation;
+                response.Status = "File: " + ValidationF + "\nEmail: " + ValidationE;
                 response.Error = true;
                 return response;
             }
@@ -51,7 +55,7 @@ namespace AzureBlobForm_backend.Models.Repository
                     await client.UploadAsync(data);
                 }
 
-                Uri sasUrl = await CreateServiceSASBlob(client);
+                Uri sasUrl = await CreateSASTokenService.CreateSASToken(client);
 
                 response.Status = $"File {blob.Name} Uploadet Succesfully.";
                 response.Error = false;
@@ -78,58 +82,5 @@ namespace AzureBlobForm_backend.Models.Repository
             return response;
         }
 
-        public static async Task<Uri> CreateServiceSASBlob(BlobClient blobClient, string storedPolicyName = null)
-        {
-            if (blobClient.CanGenerateSasUri)
-            {              
-                BlobSasBuilder sasBuilder = new BlobSasBuilder()
-                {
-                    BlobContainerName = blobClient.GetParentBlobContainerClient().Name,
-                    BlobName = blobClient.Name,
-                    Resource = "b",
-                    StartsOn = DateTimeOffset.UtcNow
-                };
-
-                if (storedPolicyName == null)
-                {
-                    sasBuilder.ExpiresOn = DateTimeOffset.UtcNow.AddHours(1);
-                    sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
-                }
-                else
-                {
-                    sasBuilder.Identifier = storedPolicyName;
-                }
-
-                Uri sasURI = blobClient.GenerateSasUri(sasBuilder);
-
-                return sasURI;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public async Task<string> ValidateFile(IFormFile blob)
-        {
-            if (blob == null)
-            {
-                return "No file uploaded.";
-            }
-
-            var allowedExtensions = new[] { ".docx" };
-            var extension = Path.GetExtension(blob.FileName).ToLower();
-
-            if (!allowedExtensions.Contains(extension))
-            {
-                return "Invalid file format. Only .docx files are allowed.";
-            }
-
-            if (!blob.ContentType.Contains("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
-            {
-                return "Invalid file content type. Expected application/vnd.openxmlformats-officedocument.wordprocessingml.document.";
-            }
-
-            return null;
-        }
     }
 }
