@@ -17,9 +17,11 @@ namespace AzureBlobForm_backend.WEB.Controllers
         [HttpPost(nameof(Upload))]
         public async Task<IActionResult> Upload(IFormFile blob, string email)
         {
-            BlobResponse? response = await _storage.UploadAsync(blob);
+            BlobResponse? response = await _storage.UploadAsync(blob, email);
 
-            if(response.Error == true) {
+            
+
+            if (response.Error == true) {
                 return StatusCode(StatusCodes.Status500InternalServerError, response.Status);
             } 
             else
