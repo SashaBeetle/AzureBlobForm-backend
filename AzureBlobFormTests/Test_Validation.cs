@@ -13,7 +13,7 @@ namespace AzureBlobFormTests
             // Arrange
             var validateService = new ValidateService();
             IFormFile testFile = null;
-
+             
             // Act
             string errorMessage = await validateService.ValidateFile(testFile);
 
