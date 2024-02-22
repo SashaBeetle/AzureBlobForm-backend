@@ -1,8 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using AzureBlobForm_backend.Core.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace AzureBlobForm_backend.WEB.Services
 {
-    public class ValidateService
+    public class ValidateService : IValidateService
     {
         public async Task<string> ValidateEmail(string email)
         {

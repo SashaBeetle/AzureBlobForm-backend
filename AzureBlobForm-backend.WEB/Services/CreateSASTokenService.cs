@@ -1,12 +1,18 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
+using AzureBlobForm_backend.Core.Interfaces;
 
 namespace AzureBlobForm_backend.WEB.Services
 {
-    public class CreateSASTokenService
+    public class CreateSASTokenService : ICreateSASTokenService
     {
-        public static async Task<Uri> CreateSASToken(BlobClient blobClient, string storedPolicyName = null)
+        public Task<Uri> CreateSASToken(BlobClient blobClient, string storedPolicyName = null)
+        {
+            return GenerateSASToken(blobClient, storedPolicyName);
+        }
+
+        public static async Task<Uri> GenerateSASToken(BlobClient blobClient, string storedPolicyName = null)
         {
             if (blobClient.CanGenerateSasUri)
             {

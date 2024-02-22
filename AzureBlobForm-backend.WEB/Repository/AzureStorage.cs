@@ -1,14 +1,10 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Sas;
 using AzureBlobForm_backend.Core.Interfaces;
 using AzureBlobForm_backend.Models.Database;
 using AzureBlobForm_backend.WEB.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Text.RegularExpressions;
-using static System.Net.WebRequestMethods;
+
 
 namespace AzureBlobForm_backend.Models.Repository
 {
@@ -17,7 +13,7 @@ namespace AzureBlobForm_backend.Models.Repository
         private readonly string _storageConnectionString;
         private readonly string _storageContainerName;
         private ValidateService _validateService = new ValidateService();
-       
+
 
         public AzureStorage(IConfiguration configuration)
         {
@@ -25,7 +21,6 @@ namespace AzureBlobForm_backend.Models.Repository
             _storageContainerName = configuration.GetValue<string>("BlobContainerName");
             
         }
-
 
         public async Task<BlobResponse> UploadAsync(IFormFile blob, string email)
         {
@@ -55,9 +50,9 @@ namespace AzureBlobForm_backend.Models.Repository
                     await client.UploadAsync(data);
                 }
 
-                Uri sasUrl = await CreateSASTokenService.CreateSASToken(client);
+                Uri sasUrl = await CreateSASTokenService.GenerateSASToken(client);
 
-                response.Status = $"File {blob.Name} Uploadet Succesfully.";
+                response.Status = $"File {blob.FileName} Uploadet Succesfully.";
                 response.Error = false;
                 response.Blob.Uri = sasUrl.AbsoluteUri;
                 response.Blob.Name = client.Name;
@@ -68,7 +63,7 @@ namespace AzureBlobForm_backend.Models.Repository
             catch (RequestFailedException ex)
                 when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
             {
-                response.Status = $"File {blob.Name} already exist. Try again.";
+                response.Status = $"File {blob.FileName} already exist. Try again.";
                 response.Error = true;
                 return response;
             }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AzureBlobForm_backend.Models.Database
+﻿namespace AzureBlobForm_backend.Models.Database
 {
     public class Dbitem
     {

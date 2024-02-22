@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
     <RootNamespace>AzureBlobForm_backend.WEB</RootNamespace>
+    <UserSecretsId>be162dd4-8a66-493d-b90f-ce7521b385c4</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
