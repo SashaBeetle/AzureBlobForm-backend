@@ -1,8 +1,0 @@
-{
-    "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "AzureWebJobsStorageConnectionStringValue",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-    "ConnectionString": "DefaultEndpointsProtocol=https;AccountName=myblobstorage15;AccountKey=Ggkzsz+MgsQLeCmeFCPy7SK3X5p+Zl1/FtY0JTyemQwEPZPeDpQxnjMdPkmWPUy4RQwLubaMa08f+ASts+pXwQ==;EndpointSuffix=core.windows.net"
-  }
-}
