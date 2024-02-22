@@ -14,9 +14,10 @@ namespace AzureBlobFormTests
         public void Setup()
         {
             Configuration = new ConfigurationBuilder()
-                .AddJsonFile("Settings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("testSetting.json", optional: false, reloadOnChange: true)
                 .Build();
         }
+
         [TestMethod]
         public async Task TestMethod_Successful_Result()
         {
