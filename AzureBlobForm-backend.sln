@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureBlobForm-backend.Core"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureBlobForm-backend.Models", "AzureBlobForm-backend.Models\AzureBlobForm-backend.Models.csproj", "{CE0B9FD9-5F57-4C8D-8C2E-A70B6EA22E6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureBlobFormTests", "AzureBlobFormTests\AzureBlobFormTests.csproj", "{8CFD078A-4D06-4601-B8DC-3F3B85647258}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureBlobForm-backend.Tests", "AzureBlobFormTests\AzureBlobForm-backend.Tests.csproj", "{8CFD078A-4D06-4601-B8DC-3F3B85647258}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
