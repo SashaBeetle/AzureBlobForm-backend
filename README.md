@@ -1,5 +1,5 @@
 # [Azure Blob Form](https://blobform.azurewebsites.net)
-### Project for `'Web Technology'` course in Lviv National University of Ivan Franko
+### Project for Reenbit .Net Trainee Camp
 Contacts:
 * [Telegram](https://t.me/Sasha_Beetle) 
 * Email: oleksandrzuk218@gmail.com
