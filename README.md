@@ -3,6 +3,12 @@
 Contacts:
 * [Telegram](https://t.me/Sasha_Beetle) 
 * Email: oleksandrzuk218@gmail.com
+
+## Other parts:
+- [Client Git](https://github.com/SashaBeetle/azureblobform-frontend)
+- [Deployed Client](https://blobreactform.azurewebsites.net)
+- [Azure Function](https://github.com/SashaBeetle/BlobAzureFunction)
+
 ## Stack
 * [.NET](https://dotnet.microsoft.com/) - free, open-source, cross-platform framework for building modern apps and powerful cloud services.
 * [Azure](https://azure.microsoft.com/) - cloud computing platform and a set of services provided by Microsoft for building, deploying, and managing applications and services through Microsoft-managed data centers.
