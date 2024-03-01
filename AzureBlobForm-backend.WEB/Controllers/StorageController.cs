@@ -8,16 +8,15 @@ namespace AzureBlobForm_backend.WEB.Controllers
     [Route("api/[controller]")]
     public class StorageController : ControllerBase
     {
-        private readonly IAzureStorage _storage;
-        public StorageController(IAzureStorage storage)
+        private readonly IAzureSendService _azureService;
+        public StorageController(IAzureSendService azureService)
         {
-            _storage = storage;
+            _azureService = azureService;
         }
         [HttpPost(nameof(Upload))]
         public async Task<IActionResult> Upload(IFormFile blob, string email)
         {
-            BlobResponse? response = await _storage.UploadAsync(blob, email);
-
+            BlobResponse? response = await _azureService.UploadAsync(blob, email);
             
 
             if (response.Error == true) {

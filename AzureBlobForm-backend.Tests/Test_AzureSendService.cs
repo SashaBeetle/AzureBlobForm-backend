@@ -1,4 +1,4 @@
-using AzureBlobForm_backend.Models.Repository;
+using AzureBlobForm_backend.WEB.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Moq;
@@ -6,7 +6,7 @@ using Moq;
 namespace AzureBlobFormTests
 {
     [TestClass]
-    public class Test_AzureStorage
+    public class Test_AzureSendService
     {
         private IConfiguration Configuration { get; set; }
 
@@ -37,7 +37,7 @@ namespace AzureBlobFormTests
             IConfiguration configuration = configBuilder.Build();
 
 
-            var azureStorage = new AzureStorage(configuration);
+            var azureStorage = new AzureSendService(configuration);
 
             var testFile = new Mock<IFormFile>();
             testFile.Setup(x => x.FileName).Returns("testfile.docx"); 
@@ -71,7 +71,7 @@ namespace AzureBlobFormTests
             IConfiguration configuration = configBuilder.Build();
 
 
-            var azureStorage = new AzureStorage(configuration);
+            var azureStorage = new AzureSendService(configuration);
 
             var testFile = new Mock<IFormFile>();
             testFile.Setup(x => x.FileName).Returns("testfile.txt");

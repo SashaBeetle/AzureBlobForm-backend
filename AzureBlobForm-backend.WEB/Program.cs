@@ -1,5 +1,5 @@
 using AzureBlobForm_backend.Core.Interfaces;
-using AzureBlobForm_backend.Models.Repository;
+using AzureBlobForm_backend.WEB.Services;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -22,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddTransient<IAzureStorage, AzureStorage>();
+builder.Services.AddTransient<IAzureSendService, AzureSendService>();
 
 var app = builder.Build();
 
