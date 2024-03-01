@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace AzureBlobForm_backend.Core.Interfaces
 {
-    public interface IAzureStorage
+    public interface IAzureSendService
     {
        Task<BlobResponse>  UploadAsync(IFormFile file, string email);
     }
